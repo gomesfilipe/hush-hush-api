@@ -1,0 +1,800 @@
+openapi: 3.0.0
+info:
+  title: Hush Hush API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+tags:
+  - name: Comments
+  - name: Dashboards
+  - name: Evaluation
+  - name: Post
+  - name: User
+paths:
+  /post/{postId}/comment:
+    post:
+      tags:
+        - Comments
+      summary: store
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                content: comment test
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: postId
+          in: path
+          schema:
+            type: integer
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /comment/{commentId}:
+    put:
+      tags:
+        - Comments
+      summary: put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                content: comment test
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: commentId
+          in: path
+          schema:
+            type: integer
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Comments
+      summary: delete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: commentId
+          in: path
+          schema:
+            type: integer
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /post/{postId}/comments:
+    get:
+      tags:
+        - Comments
+      summary: index
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: postId
+          in: path
+          schema:
+            type: integer
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /dashboards:
+    get:
+      tags:
+        - Dashboards
+      summary: dashboards
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /comment/{commentId}/like:
+    post:
+      tags:
+        - Evaluation
+      summary: like
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example: ''
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: commentId
+          in: path
+          schema:
+            type: integer
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /comment/{commentId}/dislike:
+    post:
+      tags:
+        - Evaluation
+      summary: dislike
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example: ''
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: commentId
+          in: path
+          schema:
+            type: integer
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /comment/{commentId}/none:
+    post:
+      tags:
+        - Evaluation
+      summary: none
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example: ''
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: commentId
+          in: path
+          schema:
+            type: integer
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /post:
+    post:
+      tags:
+        - Post
+      summary: store
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: post title test
+                content: ´post content test
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /post/{postId}:
+    put:
+      tags:
+        - Post
+      summary: update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: repolhada
+                content: mano impires
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: postId
+          in: path
+          schema:
+            type: integer
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Post
+      summary: delete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: postId
+          in: path
+          schema:
+            type: integer
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Post
+      summary: show
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: postId
+          in: path
+          schema:
+            type: integer
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: { }
+  /post-is-active/{postId}:
+    patch:
+      tags:
+        - Post
+      summary: patch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                is_active: false
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: postId
+          in: path
+          schema:
+            type: integer
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /posts:
+    get:
+      tags:
+        - Post
+      summary: index
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /user/posts:
+    get:
+      tags:
+        - Post
+      summary: indexByLoggedUser
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /user/{userId}/posts:
+    get:
+      tags:
+        - Post
+      summary: indexByUserId
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          schema:
+            type: integer
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /login-user:
+    post:
+      tags:
+        - User
+      summary: login
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                username:
+                  type: string
+                  example: '{{username}}'
+                password:
+                  type: string
+                  example: '{{password}}'
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /user:
+    post:
+      tags:
+        - User
+      summary: store
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                username: testStore
+                password: '12345678'
+                repeat_password: '12345678'
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - User
+      summary: update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                username: testUpdate
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - User
+      summary: showByLoggedUser
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - User
+      summary: destroyByLoggedUser
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: { }
+  /user-profile-picture:
+    post:
+      tags:
+        - User
+      summary: updateProfilePicture
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                profile_picture:
+                  type: string
+                  format: binary
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /user-password:
+    patch:
+      tags:
+        - User
+      summary: updatePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                current_password: '12345678'
+                new_password: '123456789'
+                repeat_new_password: '123456789'
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /logout-user:
+    post:
+      tags:
+        - User
+      summary: logout
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example: ''
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /users:
+    get:
+      tags:
+        - User
+      summary: index
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: count
+          in: query
+          schema:
+            type: integer
+          example: '10'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /user/{userId}:
+    get:
+      tags:
+        - User
+      summary: show
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          schema:
+            type: integer
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - User
+      summary: delete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          schema:
+            type: integer
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept-Language
+          in: header
+          schema:
+            type: string
+          example: '{{language}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
