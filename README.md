@@ -70,5 +70,6 @@ Com a API rodando,  acesse a URL abaixo para ver detalhes dos endpoints implemen
 ## Tabelas do Banco de Dados
 Foram criadas as tabelas User, Post, Comment e Evaluation. Segue abaixo diagrama ER com mais detalhes:
 
-<img src="/readme-assets/hush-hush-db.svg" alt="Hush Hush ER Diagram"/>
-
+<div style="text-align: center; max-width: 500px; height: auto">
+  <img src="readme-assets/hush-hush-db.svg" alt="Hush Hush ER Diagram"/>
+</div>
