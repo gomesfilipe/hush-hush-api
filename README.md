@@ -68,7 +68,7 @@ Com a API rodando,  acesse a URL abaixo para ver detalhes dos endpoints implemen
 <a href="http://localhost:8000/docs">http://localhost:8000/docs </a>
 
 ## Tabelas do Banco de Dados
-Foram criadas as tabelas User, Post, Comment e Evaluation. Segue abaixo diagrama ER com mais detalhes:
+Foram criadas as tabelas ``users``, ``posts``, ``comments`` e ``evaluations``. Segue abaixo diagrama ER com mais detalhes:
 
 <div style="text-align: center;">
   <img 
