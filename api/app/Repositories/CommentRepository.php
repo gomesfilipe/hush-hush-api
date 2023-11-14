@@ -5,7 +5,9 @@ namespace App\Repositories;
 use App\Enums\EvaluationStatusEnum;
 use App\Models\Comment;
 use App\Repositories\Interfaces\CommentRepositoryInterface;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 class CommentRepository implements CommentRepositoryInterface
 {
@@ -38,9 +40,22 @@ class CommentRepository implements CommentRepositoryInterface
     {
         $count = $params['count'] ?? 50;
         $orderBy = $params['order_by'] ?? 'created_at DESC';
+        $userId = $params['user_id'] ?? null;
 
-        return Comment::query()
+        $queryBuilder = Comment::query();
+
+        if (! is_null($userId)) {
+            $queryBuilder
+                ->leftJoin('evaluations', function (JoinClause $join) use ($userId) {
+                    $join->on('comments.id', '=', 'evaluations.comment_id')
+                        ->where('evaluations.user_id', '=', $userId);
+                });
+        }
+
+        return $queryBuilder
+            ->select('comments.*', DB::raw("COALESCE(evaluations.status, 'None') as user_evaluation"))
             ->where('post_id', '=', $postId)
+            ->with('user')
             ->withCount([
                 'evaluations as likes_count' => function ($query) {
                     $query->where('status', EvaluationStatusEnum::LIKE);

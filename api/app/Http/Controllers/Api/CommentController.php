@@ -26,7 +26,10 @@ class CommentController extends Controller
      */
     public function indexByPostId(CommentIndexRequest $request, int $postId): JsonResponse
     {
+        $user = $request->user();
         $attributes = $request->validated();
+        $attributes['user_id'] = $user['id'];
+
         $this->postRepository->findOrFail($postId);
         $comments = $this->commentRepository->getByPostId($postId, $attributes);
         return response()->json($comments, Response::HTTP_OK);
