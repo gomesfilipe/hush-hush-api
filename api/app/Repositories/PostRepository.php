@@ -32,6 +32,7 @@ class PostRepository implements Interfaces\PostRepositoryInterface
         if(!is_null($userId)) $query->where('user_id', '=', $userId);
 
         return $query
+            ->with('user')
             ->withCount('comments')
             ->orderByRaw($orderBy)
             ->paginate($count);
@@ -40,6 +41,8 @@ class PostRepository implements Interfaces\PostRepositoryInterface
     public function findOrFail(int $postId): object
     {
         return Post::query()
+            ->with('user')
+            ->withCount('comments')
             ->findOrFail($postId);
     }
 
