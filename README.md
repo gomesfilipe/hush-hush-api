@@ -19,12 +19,8 @@ Para rodar o backend, siga os seguintes passos:
 ```
 $ git clone <LINK_REPOSITÓRIO>
 ```
-2. Acessar o diretório ``api``;
 
-```
-$ cd api
-```
-3. Executar o comando ``make`` presente no Makefile;
+2. Executar o comando ``make`` presente no Makefile;
 
 ```
 $ make
