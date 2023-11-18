@@ -20,39 +20,50 @@ Para rodar o backend, siga os seguintes passos:
 $ git clone <LINK_REPOSITÓRIO>
 ```
 
-2. Executar o comando ``make`` presente no Makefile;
+2. Executar o comando ``make`` presente no Makefile. Ele roda o backend na porta 8000, portanto certifique-se dela estar disponível;
 
 ```
 $ make
 ```
 
-Prontinho! O backend já está em execução.
+Aguarde um pouco e... prontinho! O backend já está em execução.
 
-## Makefile
+Para encerrar a aplicação, utilize o comando ``make down``.
 
-O Makefile desenvolvido possui comandos além do ``make``, que foi utilizado no tópico anterior. Confira abaixo:
-
-1. Importar arquivos de configuração do ``vendor`` e geração do ``.env``. Deve ser executado antes de qualquer outro comando:
-```
-$ make install
-```
-
-2. Sobe os contêineres da API e do Banco de Dados.
-```
-$ make up
-```
-
-3. Derruba os contêineres da API e do Banco de Dados.
 ```
 $ make down
 ```
 
-4. Reseta e insere dados fictícios no Banco de Dados.
+## Makefile
+
+O Makefile desenvolvido possui comandos além do ``make`` e ``make down``, que foram utilizados no tópico anterior. Confira abaixo:
+
+1. Gerar o arquivo ``.env``. Esse comando apenas faz uma cópia do arquivo ``.env.example``;
+```
+$ make env
+```
+
+2. Importar arquivos de configuração do ``vendor`` e geração do ``.env``. Deve ser executado antes de qualquer outro comando:
+```
+$ make install
+```
+
+3. Sobe os contêineres da API e do Banco de Dados.
+```
+$ make up
+```
+
+4. Derruba os contêineres da API e do Banco de Dados.
+```
+$ make down
+```
+
+5. Reseta e insere dados fictícios no Banco de Dados.
 ```
 $ make seed
 ```
 
-5. Executa os comandos 1, 2 e 4. Serve para quem quer apenas rodar a aplicação.
+6. Executa os comandos 2, 3 e 5. Serve para quem quer apenas rodar a aplicação com um único comando.
 ```
 $ make
 ```
