@@ -63,7 +63,7 @@ $ make down
 $ make seed
 ```
 
-6. Executa os comandos 2, 3 e 5. Serve para quem quer apenas rodar a aplicação com um único comando.
+6. Executa os comandos 2, 3 e 5, respectivamente. Serve para quem quer apenas rodar a aplicação com um único comando.
 ```
 $ make
 ```
