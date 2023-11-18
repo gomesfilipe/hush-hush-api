@@ -14,6 +14,7 @@ use App\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -55,6 +56,9 @@ class UserController extends Controller
         return response()->json($user, Response::HTTP_OK);
     }
 
+    /**
+     * @throws Exception
+     */
     public function updatePassword(UserUpdatePasswordRequest $request): JsonResponse
     {
         $attributes = $request->validated();
@@ -63,15 +67,13 @@ class UserController extends Controller
         $user = $request->user();
         $password = $user['password'];
 
-        if(Hash::check($currentPassword, $password)) {
-            $attributes = ['password' => $attributes['new_password']];
-            $user = $this->userRepository->update($user['id'], $attributes);
-            return response()->json($user, Response::HTTP_OK);
+        if(! Hash::check($currentPassword, $password)) {
+            throw new Exception("Incorrect password", 500);
         }
 
-        return response()->json([
-            'error' => 'Incorrect password.'
-        ]);
+        $attributes = ['password' => $attributes['new_password']];
+        $user = $this->userRepository->update($user['id'], $attributes);
+        return response()->json($user, Response::HTTP_OK);
     }
 
     public function showByLoggedUser(Request $request): JsonResponse
@@ -130,17 +132,17 @@ class UserController extends Controller
         $user = $request->user();
 
         if(!is_null($user['profile_picture'])) {
-            Storage::delete($user['profile_picture']);
+            rescue(fn () => Storage::delete($user['profile_picture']));
         }
 
         $file = $request->file('profile_picture');
-        $url = Storage::put(User::PATH_PROFILE_PICTURES, $file);
+        $url = rescue(fn () => Storage::put(User::PATH_PROFILE_PICTURES, $file));
 
         $attributes = [
             'profile_picture' => $url,
         ];
 
         $user = $this->userRepository->update($user['id'], $attributes);
-        return response()->json(['profile_picture' => $user['profile_picture']], Response::HTTP_OK);
+        return response()->json($user, Response::HTTP_OK);
     }
 }
