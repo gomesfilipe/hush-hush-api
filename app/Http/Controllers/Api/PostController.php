@@ -33,24 +33,21 @@ class PostController extends Controller
         return response()->json($posts, Response::HTTP_OK);
     }
 
-    public function indexByLoggedUser(Request $request): JsonResponse
+    public function indexByLoggedUser(PostIndexRequest $request): JsonResponse
     {
         $user = $request->user();
-        $attributes = [
-            'user_id' => $user['id']
-        ];
+        $attributes = $request->validated();
+        $attributes['user_id'] = $user['id'];
 
         $posts = $this->postRepository->get($attributes);
         return response()->json($posts, Response::HTTP_OK);
     }
 
-    public function indexByUserId(int $userId): JsonResponse
+    public function indexByUserId(PostIndexRequest $request, int $userId): JsonResponse
     {
         $this->userRepository->findOrFail($userId);
-
-        $attributes = [
-            'user_id' => $userId
-        ];
+        $attributes = $request->validated();
+        $attributes['user_id'] = $userId;
 
         $posts = $this->postRepository->get($attributes);
         return response()->json($posts, Response::HTTP_OK);
