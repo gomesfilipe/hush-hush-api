@@ -44,7 +44,7 @@ class CommentController extends Controller
 
         $attributes = $request->validated();
         $attributes['post_id'] = $postId;
-        $attributes['user'] = $user['id'];
+        $attributes['user_id'] = $user['id'];
 
         $comment = $this->commentRepository->store($attributes);
         return response()->json($comment, Response::HTTP_CREATED);
