@@ -39,7 +39,7 @@ class CommentRepository implements CommentRepositoryInterface
     public function getByPostId(int $postId, array $params = []): LengthAwarePaginator
     {
         $count = $params['count'] ?? 50;
-        $orderBy = $params['order_by'] ?? 'created_at DESC';
+        $orderBy = $params['order_by'] ?? 'created_at ASC';
         $userId = $params['user_id'] ?? null;
 
         $queryBuilder = Comment::query();
