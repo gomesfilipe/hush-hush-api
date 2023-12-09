@@ -215,6 +215,7 @@ return [
         'blood_type' => 'tipo sanguíneo',
         'birth_date' => 'data de nascimento',
         'content' => 'conteúdo',
+        'repeat_password' => 'repita a senha'
     ],
 
 ];
