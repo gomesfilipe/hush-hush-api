@@ -26,7 +26,8 @@ class PostFactory extends Factory
             'content' => fake()->text(),
             'created_at' => $date,
             'updated_at' => $date,
-            'is_active' => fake()->boolean(70),
+//            'is_active' => fake()->boolean(70),
+            'is_active' => true,
             'user_id' => rand(1, UserSeeder::COUNT_USERS),
         ];
     }
