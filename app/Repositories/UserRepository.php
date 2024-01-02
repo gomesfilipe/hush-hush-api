@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,16 +15,23 @@ class UserRepository implements UserRepositoryInterface
         $attributes['password'] = Hash::make($attributes['password']);
 
         return User::query()
-            ->create($attributes);
+            ->create($attributes)
+            ->fresh();
     }
 
     public function get(array $params = []): LengthAwarePaginator
     {
         $count = $params['count'] ?? 50;
         $username = $params['username'] ?? null;
+        $email = $params['email'] ?? null;
 
         return User::query()
-            ->where('username', 'LIKE', "%$username%" )
+            ->when($username, fn (Builder $query) => $query
+                ->where('username', 'LIKE', "%$username%" )
+            )
+            ->when($email, fn (Builder $query) => $query
+                ->where('email', 'LIKE', "%$email%" )
+            )
             ->withCount('posts')
             ->withCount('comments')
             ->paginate($count);
@@ -54,7 +62,7 @@ class UserRepository implements UserRepositoryInterface
     public function delete(int $userId): bool|null
     {
         return User::query()
-            ->findOrFail($userId)
+            ->where('id', '=', $userId)
             ->delete();
     }
 

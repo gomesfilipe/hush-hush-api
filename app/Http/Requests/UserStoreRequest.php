@@ -26,6 +26,8 @@ class UserStoreRequest extends FormRequest
 
         return [
             'username' => ['required', 'string', 'min:1', "regex:$userNameRegex"],
+            'email' => ['required', 'string', 'email'],
+            'bio' => ['sometimes', 'nullable', 'string'],
             'password' => ['required', 'string', 'min:8'],
             'repeat_password' => ['required', 'string', 'same:password'],
         ];

@@ -26,6 +26,7 @@ class UserUpdateRequest extends FormRequest
 
         return [
             'username' => ['sometimes', 'string', 'min:1', "regex:$userNameRegex"],
+            'bio' => ['sometimes', 'nullable', 'string'],
         ];
     }
 }

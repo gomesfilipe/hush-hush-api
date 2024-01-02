@@ -22,9 +22,10 @@ class UserIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string'],
-            'count' => ['sometimes', 'integer', 'min:1'],
-            'page' => ['sometimes', 'integer', 'min:1'],
+            'username' => ['sometimes', 'nullable', 'string'],
+            'email' => ['sometimes', 'nullable', 'string'],
+            'count' => ['sometimes', 'nullable', 'integer', 'min:1'],
+            'page' => ['sometimes', 'nullable', 'integer', 'min:1'],
         ];
     }
 }

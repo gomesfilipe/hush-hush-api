@@ -23,9 +23,11 @@ class User extends Authenticatable
     const PATH_PROFILE_PICTURES = 'public/profile_pictures';
 
     protected $fillable = [
+        'email',
         'username',
         'password',
         'profile_picture',
+        'bio',
     ];
 
     /**
@@ -36,7 +38,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        'email',
         'email_verified_at',
     ];
 
