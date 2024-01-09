@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\EvaluationController;
 use App\Http\Controllers\Api\UserVerificationController;
+use App\Http\Controllers\Api\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +20,40 @@ use App\Http\Controllers\Api\UserVerificationController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::middleware(['setLocale'])->group(function () {
+Route::middleware('setLocale')->group(function () {
+    Route::middleware('ensureGuest')->group(function () {
+        // User
+        Route::post('/user', [UserController::class, 'store']);
+
+        // Auth
+        Route::post('/login', [AuthController::class, 'login']);
+    });
+
     Route::middleware('auth:sanctum')->group(function () {
+        // User
+        Route::get('/users', [UserController::class, 'index']);
+        Route::get('/user', [UserController::class, 'showByLoggedUser']);
+        Route::get('/user/{userId}', [UserController::class, 'show']);
+
+        // Auth
+        Route::post('/logout', [AuthController::class, 'logout']);
+
+        // Posts
+        Route::get('/posts', [PostController::class, 'index']);
+        Route::get('/user/posts', [PostController::class, 'indexByLoggedUser']);
+        Route::get('/user/{userId}/posts', [PostController::class, 'indexByUserId']);
+        Route::get('/post/{postId}', [PostController::class, 'show']);
+
+        // Comments
+        Route::get('/post/{postId}/comments', [CommentController::class, 'indexByPostId']);
+
+        // Dashboards
+        Route::get('/dashboards', [HomeController::class, 'dashboards']);
+
+        // UserVerification
+        Route::get('email/resend', [UserVerificationController::class, 'resend'])
+            ->name('verification.resend');
+
         Route::middleware('verified')->group(function () {
             // User
             Route::put('/user', [UserController::class, 'update']);
@@ -52,37 +85,7 @@ Route::middleware(['setLocale'])->group(function () {
             Route::get('email/verify/{id}/{hash}', [UserVerificationController::class, 'verify'])
                 ->name('verification.verify');
         });
-
-        // User
-        Route::get('/users', [UserController::class, 'index']);
-        Route::get('/user', [UserController::class, 'showByLoggedUser']);
-        Route::get('/user/{userId}', [UserController::class, 'show']);
-
-        // Auth
-        Route::post('/logout-user', [UserController::class, 'logout']);
-
-        // Posts
-        Route::get('/posts', [PostController::class, 'index']);
-        Route::get('/user/posts', [PostController::class, 'indexByLoggedUser']);
-        Route::get('/user/{userId}/posts', [PostController::class, 'indexByUserId']);
-        Route::get('/post/{postId}', [PostController::class, 'show']);
-
-        // Comments
-        Route::get('/post/{postId}/comments', [CommentController::class, 'indexByPostId']);
-
-        // Dashboards
-        Route::get('/dashboards', [HomeController::class, 'dashboards']);
-
-        // UserVerification
-        Route::get('email/resend', [UserVerificationController::class, 'resend'])
-            ->name('verification.resend');
     });
-
-    // User
-    Route::post('/user', [UserController::class, 'store']);
-
-    // Auth
-    Route::post('/login-user', [UserController::class, 'login']);
 });
 
 

@@ -111,31 +111,6 @@ class UserController extends Controller
         return response()->noContent();
     }
 
-    public function login(UserLoginRequest $request): JsonResponse
-    {
-        $credentials = $request->validated();
-
-        if(Auth::attempt($credentials) === false) {
-            return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
-        }
-
-        $user = $request->user();
-        $token = $user->createToken('token');
-
-        $user['token'] = [
-            'access_token' => $token->plainTextToken,
-            'token_type' => 'Bearer',
-        ];
-
-        return response()->json($user, Response::HTTP_OK);
-    }
-
-    public function logout(Request $request): Response
-    {
-        $request->user()->currentAccessToken()->delete();
-        return response()->noContent();
-    }
-
     public function uploadProfilePicture(UserUploadProfilePictureRequest $request): JsonResponse
     {
         $user = $request->user();
