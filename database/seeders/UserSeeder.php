@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
 {
-    const COUNT_USERS = 3; // UserTest and more two users.
+    const COUNT_USERS = 10; // UserTest and more two users.
 
     /**
      * Run the database seeds.
@@ -18,11 +18,13 @@ class UserSeeder extends Seeder
         // Test User
         User::factory()
             ->testUser()
+            ->verified()
             ->create();
 
         // Random Users
         User::factory()
             ->count(self::COUNT_USERS - 1)
+            ->verified()
             ->create();
     }
 }
