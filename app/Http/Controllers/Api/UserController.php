@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,14 +37,22 @@ class UserController extends Controller
     public function store(UserStoreRequest $request): JsonResponse
     {
         $attributes = $request->validated();
-        $user = $this->userRepository->store($attributes);
 
-        $token = $user->createToken('token');
+        $user = DB::transaction(function () use ($attributes)
+        {
+            /** @var User $user */
+            $user = $this->userRepository->store($attributes);
 
-        $user['token'] = [
-            'access_token' => $token->plainTextToken,
-            'token_type' => 'Bearer',
-        ];
+            $user->sendEmailVerificationNotification();
+            $token = $user->createToken('token');
+
+            $user['token'] = [
+                'access_token' => $token->plainTextToken,
+                'token_type' => 'Bearer',
+            ];
+
+            return $user;
+        });
 
         return response()->json($user, Response::HTTP_CREATED);
     }
